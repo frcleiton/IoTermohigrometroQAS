@@ -1,0 +1,16 @@
+[Unit]
+Description=uWSGI instance to serve lab_app
+After=network.target
+
+[Service]
+#Cleiton 08.06.2017
+#Arquivo de configuracao do servico uwsgi
+#/etc/systemd/system/lab_app.service
+User=cleiton
+Group=www-data
+WorkingDirectory=/home/cleiton/IoTermohigrometro
+Environment="PATH=/home/cleiton/IoTemohigrometro"
+ExecStart=/usr/local/bin/uwsgi --ini /home/cleiton/IoTermohigrometro/lab_app_uwsgi.ini
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+#Cleiton 08.06.2017
+#/etc/nginx/sites-availeble
+#link simbolico em /etc/nginx/sites-enable 
+
+server {
+    listen 80;
+    server_name localhost;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/cleiton/IoTermohigrometro/lab_app.sock;
+    }
+}

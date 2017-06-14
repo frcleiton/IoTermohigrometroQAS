@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <!-- Basic Page Needs ––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>Historico</title>
+    <meta name="description" content="Historico Termohigrometro">
+    <meta name="author" content="Cleiton Ferreira">
+    <!-- Mobile Specific Metas  ––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- FONT ––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <!-- CSS –––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <link rel="stylesheet" href="/static/css/skeleton.css">
+    <!-- Favicon ––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="/static/images/favcimed.png">
+  </head>
+  <body>
+    <div class="container" style="top: 40px">
+      <h2>Parâmetros de alerta</h2>
+      <form id="parametros" action="/lab_parametros" method="POST"> 
+        <div class="row">
+          <div class="four columns">
+            <label for="Temperatura mínima">Temperatura minima</label>
+            <input class="u-full-width" id="temp_min" type="number" name="temp_min" value="{{min}}">
+          </div>
+          <div class="four columns">
+            <label for="Temperatura máxima">Temperatura máxima</label>
+            <input class="u-full-width" id="temp_max" type="number" name="temp_max" value="{{max}}">
+          </div>
+        </div>
+        <div class="row">
+          <input class="button-primary" type="submit" value="Enviar" id="submit" />
+        </div>
+        <div class="one column">
+          <a href="/" style="position:relative;top:15px">Voltar</a>
+       	</div>
+      </form> 
+    </div>
+  </body>
+</html>
