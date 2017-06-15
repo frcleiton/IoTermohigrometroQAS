@@ -61,25 +61,6 @@ def lab_env_db():
 							#by the Plotly link
 							hum_items 		= len(humidities))
 
-@app.route("/lab_medias", methods=['GET'])
-def lab_medias():
-    conn 	= sqlite3.connect('lab_app.db')
-    curs 	= conn.cursor()
-    qry = "SELECT strftime('%d%m%Y', rDatetime), avg(temp) as media, min(temp) as minimo, max(temp) as maxima from temperatures group by strftime('%d%m%Y',rDatetime)"
-    curs.execute(qry)
-    medias = curs.fetchall()
-    conn.close()
-
-    lmedias_date = []
-
-    for record in medias:
-        print record[0]
-        #lmedias_date.append(datetime.datetime.strptime(record[0], '%d%m%Y').date())
-lmedias_date.append([local_timedate.format('YYYY-MM-DD HH:mm'), round(record[1],2)]
-return render_template("lab_temp.html",temp=temperature,hum=humidity,equipname=equipamento,equipsite=local,min=rmin[0],max=rmax[0])
-        print 'teste'
-
-
 def get_records():
 	from_date_str 	= request.args.get('from',time.strftime("%Y-%m-%d 00:00")) #Get the from date value from the URL
 	to_date_str 	= request.args.get('to',time.strftime("%Y-%m-%d %H:%M"))   #Get the to date value from the URL
@@ -149,6 +130,25 @@ def lab_parametros():
         conn2.commit()
         conn2.close()
         return redirect('/lab_parametros')
+
+@app.route("/lab_medias", methods=['GET'])
+def lab_medias():
+    from flask import redirect
+    conn 	= sqlite3.connect('lab_app.db')
+    curs 	= conn.cursor()
+    #qry = "SELECT strftime('%d%m%Y', rDatetime), avg(temp) as media, min(temp) as minimo, max(temp) as maxima from temperatures group by strftime('%d%m%Y',rDatetime)"
+    qry = "SELECT strftime('%d%m%Y', rDatetime), avg(temp) as media from temperatures group by strftime('%d%m%Y',rDatetime)"
+    curs.execute(qry)
+    medias = curs.fetchall()
+    conn.close()
+    lmedias_date = []
+    for record in medias:
+        lmedias_date.append([arrow.get(record[0], "DDMMYYYY").strftime("%Y-%m-%d"), round(record[1],2)])
+    lmedia_items = len(lmedias_date)
+    return render_template("lab_medias.html",medias_date=lmedias_date,media_items=lmedia_items)
+#lmedias_date.append(datetime.datetime.strptime(record[0], '%d%m%Y').date())
+#return render_template("lab_temp.html",temp=temperature,hum=humidity,equipname=equipamento,equipsite=local,mini=rmin[0],maxi=rmax[0])
+#return redirect('/lab_parametros')                            
 
 def validate_date(d):
     try:
